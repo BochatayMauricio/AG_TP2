@@ -45,10 +45,10 @@ def calcularProporcion(inventario:list):
     proporciones_ordenada=sorted(proporciones,key=lambda x:x[1]) #con esta linea ordenamos de menor a mayor
     return proporciones_ordenada
 
-def cargarMochila(porporciones_ord:list,inventario:list,mochila:mochila_heuristico):
-    porporciones_invertida=list(reversed(porporciones_ord)) #utilizamos reverse porque es mejor si está ordenada de mayor a menor
-    print(porporciones_invertida)
-    for p in porporciones_invertida: 
+def cargarMochila(proporciones_ord:list,inventario:list,mochila:mochila_heuristico):
+    proporciones_invertida=list(reversed(proporciones_ord)) #utilizamos reverse porque es mejor si está ordenada de mayor a menor
+    print(proporciones_invertida)
+    for p in proporciones_invertida: 
         prod_seleccionado = inventario[p[0]-1]
         mochila.setProducto(prod_seleccionado)
 
