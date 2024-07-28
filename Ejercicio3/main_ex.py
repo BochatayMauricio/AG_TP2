@@ -1,41 +1,27 @@
 import inventario
 import producto
-import mochila
+import mochila_ex
 import time
 #Tiempo de inicio de ejecucion
 inicio = time.time()
 
 #La matriz de subconjuntos
 conjuntos = []
-#Capacidad mochila en cm3
-capacidad = 4200
+#peso maximo mochila en gr
+pesoMax = 3000
 #creo la instancia del inventario
 inv = inventario.inventario()
 def inicializacion():
-    prod1 = producto.producto(1,20,150)
+    prod1 = producto.producto(1,72,1800)
     inv.agregarProducto(prod1)
-    prod2 = producto.producto(2,40,325)
+    prod2 = producto.producto(2,36,600)
     inv.agregarProducto(prod2)
-    prod3 = producto.producto(3,50,600)
+    prod3 = producto.producto(3,60,1200)
     inv.agregarProducto(prod3)
-    prod4 = producto.producto(4,36,805)
-    inv.agregarProducto(prod4)
-    prod5 = producto.producto(5,25,430)
-    inv.agregarProducto(prod5)
-    prod6 = producto.producto(6,64,1200)
-    inv.agregarProducto(prod6)
-    prod7 = producto.producto(7,54,770)
-    inv.agregarProducto(prod7)
-    prod8 = producto.producto(8,18,60)
-    inv.agregarProducto(prod8)
-    prod9 = producto.producto(9,46,930)
-    inv.agregarProducto(prod9)
-    prod10 = producto.producto(10,28,353)
-    inv.agregarProducto(prod10)
 
     #muestro inventario
     for i in range(len(inv.getInventario())):
-        print(  inv.getInventario()[i].getVolumen(),'--',
+        print(  inv.getInventario()[i].getPeso(),'--',
                  inv.getInventario()[i].getValor() )
     cantidad = len(inv.getInventario())
     return cantidad,inv.getInventario()
@@ -60,13 +46,13 @@ def elegirMejor(productos:list,conjuntos:list):
     indiceOptimo=-1
     maxValor = 0
     for subcon in conjuntos:
-        volSubConjunto = 0
+        pesoSubConjunto = 0
         sum = 0
         for i in range(len(subcon)):
             if(subcon[i]==1):
                 sum = sum + productos[i].getValor()
-                volSubConjunto = volSubConjunto + productos[i].getVolumen()
-        if(sum>maxValor and volSubConjunto <= capacidad):
+                pesoSubConjunto = pesoSubConjunto + productos[i].getPeso()
+        if(sum>maxValor and pesoSubConjunto <= pesoMax):
             maxValor = sum
             indiceOptimo = conjuntos.index(subcon)
     print(indiceOptimo)
@@ -83,8 +69,9 @@ conjuntos=generarSubconjuntos(cantidad_productos)
 mejorSubconjunto = elegirMejor(inventario,conjuntos)
 #creamos la instancia de la mochila
 productosSelec:list = productosSeleccionados(mejorSubconjunto)
-mochila = mochila.mochila(productosSelec)
+mochila = mochila_ex.mochila(productosSelec)
 #Mostramos la mochila
 mochila.mostrarMochila()
 fin = time.time()
 print("Tiempo de ejecucion",(fin-inicio)*(10**3),"ms")
+
